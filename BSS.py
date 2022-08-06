@@ -41,17 +41,17 @@ dsets = {"train": datasets.ImageFolder(root=trainpath, transform=data_transforms
          "val": datasets.ImageFolder(root=testpath, transform=data_transforms["val"]),
          "test": datasets.ImageFolder(root=testpath, transform=data_transforms["val"])}
 dset_loaders = {x: torch.utils.data.DataLoader(dsets[x], batch_size=batch_size[x],
-                                               shuffle=True, num_workers=4)
+                                               shuffle=True, num_workers=0)
                 for x in ['train', 'val']}
 dset_loaders["test"] = torch.utils.data.DataLoader(dsets["test"], batch_size=batch_size["test"],
-                                                   shuffle=False, num_workers=4)
+                                                   shuffle=False, num_workers=0)
 
 for i in range(10):
     dsets["val" + str(i)] = datasets.ImageFolder(root=testpath,
                                                  transform=data_transforms["val" + str(i)])
     dset_loaders["val" + str(i)] = torch.utils.data.DataLoader(dsets["val" + str(i)],
                                                                batch_size=batch_size["val" + str(i)], shuffle=False,
-                                                               num_workers=4)
+                                                               num_workers=0)
 dset_sizes = {x: len(dsets[x]) for x in ['train', 'val'] + ["val" + str(i) for i in range(10)]}
 
 dset_classes = range(len(dsets['train'].classes))
